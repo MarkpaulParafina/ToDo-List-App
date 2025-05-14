@@ -1,0 +1,38 @@
+<div class="todo-wrapper">
+  <div class="todo-header">
+    <h1 class="title">Today</h1>
+    <p class="subtitle">{{ currentDate }}</p>
+
+    <form (ngSubmit)="addTodo()" class="todo-input-group">
+      <input
+        type="text"
+        placeholder="Enter a task..."
+        [(ngModel)]="newTodo"
+        name="newTodo"
+        required
+      />
+      <button type="submit" class="add-btn">+ Add</button>
+    </form>
+  </div>
+
+  <div class="todo-list">
+    <div *ngFor="let todo of todos; let i = index" class="todo-card">
+      <div class="card-left">
+        <div class="dot"></div>
+        <div class="task-text">
+          <h3 [class.strike]="todo.completed">{{ todo.title }}</h3>
+          <p class="task-subtext">
+            Status: <span [ngClass]="{ finished: todo.completed, inprogress: !todo.completed }">
+              {{ todo.completed ? 'Finished' : 'In progress' }}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-finish" [disabled]="todo.completed" (click)="markComplete(todo)">✓</button>
+        <button class="btn-delete" (click)="deleteTodo(todo.id!)">🗑</button>
+      </div>
+    </div>
+  </div>
+</div>
